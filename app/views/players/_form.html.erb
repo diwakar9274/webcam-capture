@@ -1,0 +1,46 @@
+<%= form_with(model: player) do |form| %>
+  <% if player.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(player.errors.count, "error") %> prohibited this player from being saved:</h2>
+
+      <ul>
+        <% player.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="ml-4 mb-4">
+    <div class="row">
+      <div class="card" style="width: 18rem;">
+        <% if @player.picture.attached? && @player.has_picture? %>
+          <%= image_tag(@player.picture, class: "card-img-top", id: "shot") %>
+        <% else %>
+          <img class="card-img-top" src='https://cdn.pixabay.com/photo/2014/11/30/14/11/cat-551554__340.jpg' alt="No Picture" id="shot">
+        <% end %>
+      </div>
+
+      <div class="card ml-2" style="width: 18rem;" id="viewfinder">
+        <video width="288" height="301" autoplay class=""></video>
+      </div>
+    </div>
+
+    <div class="mt-2">
+      <button type="button" class="btn btn-dark btn-sm" id="change_picture">Change Picture</button>
+      <button type="button" class="btn btn-dark btn-sm" id="snap">Snap</button>
+    </div>
+  </div>
+
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+  <%= form.hidden_field :player_picture, value: @player.player_picture %>
+
+<% end %>
